@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRMNY QA Feedback Copy Tool</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 30px; background: #f6f7fb; color: #222; }
+    h1 { margin-bottom: 5px; }
+    .intro { max-width: 900px; color: #555; margin-bottom: 25px; }
+    .section { background: white; padding: 18px; border-radius: 12px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    h2 { margin-top: 0; font-size: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+    button { border: 1px solid #ddd; background: #fff; padding: 12px; border-radius: 10px; cursor: pointer; text-align: left; font-size: 14px; }
+    button:hover { background: #eef0ff; border-color: #7777ff; }
+    .code { font-weight: bold; color: #4242c7; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #222; color: white; padding: 12px 18px; border-radius: 8px; display: none; }
+  </style>
+</head>
+<body>
+  <h1>HRMNY QA Feedback Copy Tool</h1>
+  <p class="intro">
+    Click a button to copy structured feedback to your clipboard. Paste it into HRMNY’s qualitative feedback box.
+    Add any case-specific narrative afterwards if needed.
+  </p>
+
+  <div class="section">
+    <h2>Common Scenarios</h2>
+    <div class="grid">
+      <button onclick="copyText(`Outcome: Incorrect
+Category: Wrong Rule Applied
+Code: WR5 – Applicability failure
+Severity calibration: AI over-escalated / should not be treated as an issue
+Learning rule: Applicability before completeness
+
+Feedback:
+This suggestion is not appropriate in this context. The AI should first determine whether the section is applicable to the person’s setting and statutory pathway before critiquing how the section has been completed.`)">
+        <span class="code">WR5</span> Care home / hospital-only section
+      </button>
+
+      <button onclick="copyText(`Outcome: Incorrect
+Category: Hallucination
+Code: H3 – Duplicate statutory requirement
+Severity calibration: AI over-escalated / should not be treated as a mandatory Form 4 omission
+Learning rule: Substance over structure
+
+Feedback:
+This suggestion incorrectly treats a wider DoLS requirement as a mandatory standalone requirement within the Form 4. The AI should assess whether the BIA has covered the substance of the issue within the narrative or wider assessment process, rather than expecting a specific heading or separate declaration.`)">
+        <span class="code">H3</span> Form 4 mandatory omission false positive
+      </button>
+
+      <button onclick="copyText(`Outcome: Incorrect
+Category: Wrong Rule Applied
+Code: WR4 – Workflow misunderstanding
+Severity calibration: AI over-escalated / administrative clarification at most
+Learning rule: Recommendation does not equal allocation
+
+Feedback:
+A named paid RPR may not be known at the point the assessment is completed. The assessor may appropriately identify the need for a paid RPR while the Supervisory Body later arranges allocation. This should not automatically be treated as a legal defect.`)">
+        <span class="code">WR4</span> Paid RPR not yet allocated
+      </button>
+
+      <button onclick="copyText(`Outcome: Incorrect
+Category: Wrong Rule Applied
+Code: WR1 – Form logic misunderstood
+Severity calibration: AI misread the form logic
+Learning rule: Form-aware interpretation
+
+Feedback:
+This form uses reverse or negative wording. The AI should interpret the answer against the actual proposition being asked, rather than assuming that Yes/No has the same meaning across all MCA or DoLS templates.`)">
+        <span class="code">WR1</span> Reverse-logic form wording
+      </button>
+
+      <button onclick="copyText(`Outcome: Partially Correct
+Category: Hallucination
+Code: H4 – Template ambiguity misread
+Severity calibration: Clarification prompt rather than critical defect
+Learning rule: Distinguish template ambiguity from assessor error
+
+Feedback:
+The observation is understandable, but the apparent issue may arise from ambiguous or poorly designed form wording rather than a genuine contradiction. Where intent can reasonably be inferred, the AI should frame this as a clarification prompt rather than a critical error.`)">
+        <span class="code">H4</span> Template ambiguity
+      </button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Wrong Rule Applied</h2>
+    <div class="grid">
+      <button onclick="copyCode('Wrong Rule Applied', 'WR1', 'Form logic misunderstood')"><span class="code">WR1</span> Form logic misunderstood</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR2', 'Statutory rule misunderstood')"><span class="code">WR2</span> Statutory rule misunderstood</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR3', 'Wrong legal pathway')"><span class="code">WR3</span> Wrong legal pathway</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR4', 'Workflow misunderstanding')"><span class="code">WR4</span> Workflow misunderstanding</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR5', 'Applicability failure')"><span class="code">WR5</span> Applicability failure</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR6', 'Over-prescription')"><span class="code">WR6</span> Over-prescription</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR7', 'Context failure')"><span class="code">WR7</span> Context failure</button>
+      <button onclick="copyCode('Wrong Rule Applied', 'WR8', 'Severity miscalibration')"><span class="code">WR8</span> Severity miscalibration</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Hallucination</h2>
+    <div class="grid">
+      <button onclick="copyCode('Hallucination', 'H1', 'Issue not evidenced')"><span class="code">H1</span> Issue not evidenced</button>
+      <button onclick="copyCode('Hallucination', 'H2', 'Assumed missing content')"><span class="code">H2</span> Assumed missing content</button>
+      <button onclick="copyCode('Hallucination', 'H3', 'Duplicate statutory requirement')"><span class="code">H3</span> Duplicate statutory requirement</button>
+      <button onclick="copyCode('Hallucination', 'H4', 'Template ambiguity misread')"><span class="code">H4</span> Template ambiguity misread</button>
+      <button onclick="copyCode('Hallucination', 'H5', 'Unsupported legal inference')"><span class="code">H5</span> Unsupported legal inference</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Poor Explanation</h2>
+    <div class="grid">
+      <button onclick="copyCode('Poor Explanation', 'PE1', 'Correct issue, overstated')"><span class="code">PE1</span> Correct issue, overstated</button>
+      <button onclick="copyCode('Poor Explanation', 'PE2', 'Wrong severity')"><span class="code">PE2</span> Wrong severity</button>
+      <button onclick="copyCode('Poor Explanation', 'PE3', 'Legally imprecise wording')"><span class="code">PE3</span> Legally imprecise wording</button>
+      <button onclick="copyCode('Poor Explanation', 'PE4', 'Too generic')"><span class="code">PE4</span> Too generic</button>
+      <button onclick="copyCode('Poor Explanation', 'PE5', 'Missing rationale')"><span class="code">PE5</span> Missing rationale</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Correct</h2>
+    <div class="grid">
+      <button onclick="copyCode('Correct', 'C1', 'Genuine contradiction found')"><span class="code">C1</span> Genuine contradiction found</button>
+      <button onclick="copyCode('Correct', 'C2', 'Legal inconsistency identified')"><span class="code">C2</span> Legal inconsistency identified</button>
+      <button onclick="copyCode('Correct', 'C3', 'Workflow issue correctly spotted')"><span class="code">C3</span> Workflow issue correctly spotted</button>
+      <button onclick="copyCode('Correct', 'C4', 'Helpful quality improvement suggestion')"><span class="code">C4</span> Helpful quality improvement suggestion</button>
+      <button onclick="copyCode('Correct', 'C5', 'Strong contextual reasoning')"><span class="code">C5</span> Strong contextual reasoning</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Severity Calibration</h2>
+    <div class="grid">
+      <button onclick="copySeverity('L1 – Practice Enhancement', 'Helpful strengthening only', 'Wishes and feelings wording')"><span class="code">L1</span> Practice Enhancement</button>
+      <button onclick="copySeverity('L2 – Clarification Needed', 'Minor ambiguity', 'Poorly completed wording')"><span class="code">L2</span> Clarification Needed</button>
+      <button onclick="copySeverity('L3 – Quality Concern', 'Weakens defensibility', 'Weak necessity analysis')"><span class="code">L3</span> Quality Concern</button>
+      <button onclick="copySeverity('L4 – Legal Concern', 'May affect legal validity', 'Contradictory tick boxes')"><span class="code">L4</span> Legal Concern</button>
+      <button onclick="copySeverity('L5 – Critical Defect', 'Potentially unlawful/invalid', 'Wrong eligibility pathway')"><span class="code">L5</span> Critical Defect</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Copied to clipboard</div>
+
+  <script>
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(showToast);
+    }
+
+    function copyCode(category, code, meaning) {
+      copyText(`Category: ${category}
+Code: ${code} – ${meaning}
+Severity calibration:
+Learning rule:
+
+Feedback:
+`);
+    }
+
+    function copySeverity(level, meaning, example) {
+      copyText(`Severity calibration: ${level}
+Meaning: ${meaning}
+Example: ${example}
+
+Feedback:
+`);
+    }
+
+    function showToast() {
+      const toast = document.getElementById("toast");
+      toast.style.display = "block";
+      setTimeout(() => toast.style.display = "none", 1400);
+    }
+  </script>
+</body>
+</html>
